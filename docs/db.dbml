@@ -1,0 +1,128 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+// Or, view in VSCode with extension: "DBML Live Preview"
+
+Project DBML {
+  Note: '''
+Accommodation: Represents accommodation available at destinations.
+Destination: Represents a holiday destination.
+Activity: Represents an activity offered at a destination.
+Booking: Represents a booking made by a user for a holiday.
+User: Represents a user in the Flintstones holiday planner.
+DestinationActivity: missing (requires genai creation)
+Event: Represents special events occurring at a destination.
+Guide: Represents guides available for activities at destinations.
+Package: Represents holiday packages that include multiple destinations.
+PackageDestination: Represents destinations included in a holiday package.
+Review: Represents reviews given by users for destinations.
+Transportation: Represents transportation options available for a destination.
+UserPreference: Represents user preferences for activities and destinations.
+'''
+}
+
+Table Accommodation {
+    id INTEGER [primary key]
+    name VARCHAR 
+    Type VARCHAR 
+    destination_id INTEGER 
+    }
+
+Table Destination {
+    id INTEGER [primary key]
+    name VARCHAR 
+    location VARCHAR 
+    }
+
+Table Activity {
+    id INTEGER [primary key]
+    name VARCHAR 
+    description VARCHAR 
+    }
+
+Table Booking {
+    id INTEGER [primary key]
+    user_id INTEGER 
+    destination_id INTEGER 
+    start_date DATETIME 
+    end_date DATETIME 
+    total_cost FLOAT 
+    }
+
+Table User {
+    id INTEGER [primary key]
+    name VARCHAR 
+    email VARCHAR 
+    }
+
+Table DestinationActivity {
+    id INTEGER [primary key]
+    destination_id INTEGER 
+    activity_id INTEGER 
+    }
+
+Table Event {
+    id INTEGER [primary key]
+    name VARCHAR 
+    date DATETIME 
+    destination_id INTEGER 
+    }
+
+Table Guide {
+    id INTEGER [primary key]
+    name VARCHAR 
+    activity_id INTEGER 
+    }
+
+Table Package {
+    id INTEGER [primary key]
+    name VARCHAR 
+    description VARCHAR 
+    price FLOAT 
+    }
+
+Table PackageDestination {
+    id INTEGER [primary key]
+    package_id INTEGER 
+    destination_id INTEGER 
+    }
+
+Table Review {
+    id INTEGER [primary key]
+    user_id INTEGER 
+    destination_id INTEGER 
+    rating INTEGER 
+    comments VARCHAR 
+    }
+
+Table Transportation {
+    id INTEGER [primary key]
+    Type VARCHAR 
+    cost FLOAT 
+    destination_id INTEGER 
+    }
+
+Table UserPreference {
+    id INTEGER [primary key]
+    user_id INTEGER 
+    preferred_activity_id INTEGER 
+    preferred_destination_id INTEGER 
+    }
+
+
+
+// Relationships
+    Ref: Accommodation.(destination_id) < Destination.(id)
+    Ref: Booking.(destination_id) < Destination.(id)
+    Ref: Booking.(user_id) < User.(id)
+    Ref: DestinationActivity.(activity_id) < Activity.(id)
+    Ref: DestinationActivity.(destination_id) < Destination.(id)
+    Ref: Event.(destination_id) < Destination.(id)
+    Ref: Guide.(activity_id) < Activity.(id)
+    Ref: PackageDestination.(destination_id) < Destination.(id)
+    Ref: PackageDestination.(package_id) < Package.(id)
+    Ref: Review.(destination_id) < Destination.(id)
+    Ref: Review.(user_id) < User.(id)
+    Ref: Transportation.(destination_id) < Destination.(id)
+    Ref: UserPreference.(preferred_activity_id) < Activity.(id)
+    Ref: UserPreference.(preferred_destination_id) < Destination.(id)
+    Ref: UserPreference.(user_id) < User.(id)

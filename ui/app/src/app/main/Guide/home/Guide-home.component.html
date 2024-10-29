@@ -1,0 +1,42 @@
+<o-form-layout-manager attr="Guide" mode="tab" title="GUIDE">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="GuideTable" 
+            service="Guide" 
+            entity="Guide" 
+            title="GUIDE"
+            keys="id"
+            columns="name;activity_id;id" 
+            header-actions="R;D"
+            visible-columns="name;activity_id;id"  
+            sort-columns="name" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #name attr="name" title=" name*" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column attr="activity_id" title="activity_id">
+    <o-table-cell-renderer-service attr="activity_id" 
+        service="Activity" entity="ActivityType" columns="id;name"
+        parent-keys="id:activity_id"
+        value-column="name" keys="activity_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #id attr="id" title="id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

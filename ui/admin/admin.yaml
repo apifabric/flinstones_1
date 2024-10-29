@@ -1,0 +1,379 @@
+about:
+  date: October 29, 2024 11:22:07
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 15
+  number_tables: 13
+info_toggle_checked: true
+resources:
+  Accommodation:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: destination_id
+    - name: Type
+    - name: id
+    description: Represents accommodation available at destinations.
+    info_list: Represents accommodation available at destinations.
+    tab_groups:
+    - direction: toone
+      fks:
+      - destination_id
+      name: destination
+      resource: Destination
+    type: Accommodation
+    user_key: name
+  Activity:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: description
+    - name: id
+    description: Represents an activity offered at a destination.
+    info_list: Represents an activity offered at a destination.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - activity_id
+      name: DestinationActivityList
+      resource: DestinationActivity
+    - direction: tomany
+      fks:
+      - activity_id
+      name: GuideList
+      resource: Guide
+    - direction: tomany
+      fks:
+      - preferred_activity_id
+      name: UserPreferenceList
+      resource: UserPreference
+    type: Activity
+    user_key: name
+  Booking:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: destination_id
+    - name: user_id
+    - name: start_date
+      type: DATETIME
+    - name: end_date
+      type: DATETIME
+    - name: total_cost
+    description: Represents a booking made by a user for a holiday.
+    info_list: Represents a booking made by a user for a holiday.
+    tab_groups:
+    - direction: toone
+      fks:
+      - destination_id
+      name: destination
+      resource: Destination
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Booking
+    user_key: id
+  Destination:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: location
+    - name: id
+    description: Represents a holiday destination.
+    info_list: Represents a holiday destination.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - destination_id
+      name: AccommodationList
+      resource: Accommodation
+    - direction: tomany
+      fks:
+      - destination_id
+      name: BookingList
+      resource: Booking
+    - direction: tomany
+      fks:
+      - destination_id
+      name: DestinationActivityList
+      resource: DestinationActivity
+    - direction: tomany
+      fks:
+      - destination_id
+      name: EventList
+      resource: Event
+    - direction: tomany
+      fks:
+      - destination_id
+      name: PackageDestinationList
+      resource: PackageDestination
+    - direction: tomany
+      fks:
+      - destination_id
+      name: ReviewList
+      resource: Review
+    - direction: tomany
+      fks:
+      - destination_id
+      name: TransportationList
+      resource: Transportation
+    - direction: tomany
+      fks:
+      - preferred_destination_id
+      name: UserPreferenceList
+      resource: UserPreference
+    type: Destination
+    user_key: name
+  DestinationActivity:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: activity_id
+    - name: destination_id
+    tab_groups:
+    - direction: toone
+      fks:
+      - activity_id
+      name: activity
+      resource: Activity
+    - direction: toone
+      fks:
+      - destination_id
+      name: destination
+      resource: Destination
+    type: DestinationActivity
+    user_key: id
+  Event:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: destination_id
+    - name: date
+      type: DATETIME
+    - name: id
+    description: Represents special events occurring at a destination.
+    info_list: Represents special events occurring at a destination.
+    tab_groups:
+    - direction: toone
+      fks:
+      - destination_id
+      name: destination
+      resource: Destination
+    type: Event
+    user_key: name
+  Guide:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: activity_id
+    - name: id
+    description: Represents guides available for activities at destinations.
+    info_list: Represents guides available for activities at destinations.
+    tab_groups:
+    - direction: toone
+      fks:
+      - activity_id
+      name: activity
+      resource: Activity
+    type: Guide
+    user_key: name
+  Package:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: description
+    - name: price
+    - name: id
+    description: Represents holiday packages that include multiple destinations.
+    info_list: Represents holiday packages that include multiple destinations.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - package_id
+      name: PackageDestinationList
+      resource: PackageDestination
+    type: Package
+    user_key: name
+  PackageDestination:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: destination_id
+    - name: package_id
+    description: Represents destinations included in a holiday package.
+    info_list: Represents destinations included in a holiday package.
+    tab_groups:
+    - direction: toone
+      fks:
+      - destination_id
+      name: destination
+      resource: Destination
+    - direction: toone
+      fks:
+      - package_id
+      name: package
+      resource: Package
+    type: PackageDestination
+    user_key: id
+  Review:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: destination_id
+    - name: user_id
+    - name: rating
+    - name: comments
+    description: Represents reviews given by users for destinations.
+    info_list: Represents reviews given by users for destinations.
+    tab_groups:
+    - direction: toone
+      fks:
+      - destination_id
+      name: destination
+      resource: Destination
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Review
+    user_key: id
+  Transportation:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: destination_id
+    - name: Type
+    - name: cost
+    description: Represents transportation options available for a destination.
+    info_list: Represents transportation options available for a destination.
+    tab_groups:
+    - direction: toone
+      fks:
+      - destination_id
+      name: destination
+      resource: Destination
+    type: Transportation
+    user_key: id
+  User:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: email
+    - name: id
+    description: Represents a user in the Flintstones holiday planner.
+    info_list: Represents a user in the Flintstones holiday planner.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - user_id
+      name: BookingList
+      resource: Booking
+    - direction: tomany
+      fks:
+      - user_id
+      name: ReviewList
+      resource: Review
+    - direction: tomany
+      fks:
+      - user_id
+      name: UserPreferenceList
+      resource: UserPreference
+    type: User
+    user_key: name
+  UserPreference:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: preferred_activity_id
+    - name: preferred_destination_id
+    - name: user_id
+    description: Represents user preferences for activities and destinations.
+    info_list: Represents user preferences for activities and destinations.
+    tab_groups:
+    - direction: toone
+      fks:
+      - preferred_activity_id
+      name: preferred_activity
+      resource: Activity
+    - direction: toone
+      fks:
+      - preferred_destination_id
+      name: preferred_destination
+      resource: Destination
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: UserPreference
+    user_key: id
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

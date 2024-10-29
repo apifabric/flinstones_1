@@ -1,0 +1,569 @@
+about:
+  date: October 29, 2024 11:22:07
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+entities:
+  Accommodation:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: destination_id
+      template: integer
+      type: INTEGER
+    - name: Type
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents accommodation available at destinations.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents accommodation available at destinations.
+    label: Accommodation
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - destination_id
+      name: destination
+      resource: Destination
+    type: Accommodation
+  Activity:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: description
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents an activity offered at a destination.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents an activity offered at a destination.
+    label: Activity
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - activity_id
+      name: DestinationActivityList
+      resource: DestinationActivity
+    - direction: tomany
+      fks:
+      - activity_id
+      name: GuideList
+      resource: Guide
+    - direction: tomany
+      fks:
+      - preferred_activity_id
+      name: UserPreferenceList
+      resource: UserPreference
+    type: Activity
+  Booking:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: destination_id
+      template: integer
+      type: INTEGER
+    - name: user_id
+      template: integer
+      type: INTEGER
+    - name: start_date
+      type: DATETIME
+    - name: end_date
+      type: DATETIME
+    - name: total_cost
+      template: real
+      type: FLOAT
+    description: Represents a booking made by a user for a holiday.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents a booking made by a user for a holiday.
+    label: Booking
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - destination_id
+      name: destination
+      resource: Destination
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Booking
+  Destination:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: location
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents a holiday destination.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents a holiday destination.
+    label: Destination
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - destination_id
+      name: AccommodationList
+      resource: Accommodation
+    - direction: tomany
+      fks:
+      - destination_id
+      name: BookingList
+      resource: Booking
+    - direction: tomany
+      fks:
+      - destination_id
+      name: DestinationActivityList
+      resource: DestinationActivity
+    - direction: tomany
+      fks:
+      - destination_id
+      name: EventList
+      resource: Event
+    - direction: tomany
+      fks:
+      - destination_id
+      name: PackageDestinationList
+      resource: PackageDestination
+    - direction: tomany
+      fks:
+      - destination_id
+      name: ReviewList
+      resource: Review
+    - direction: tomany
+      fks:
+      - destination_id
+      name: TransportationList
+      resource: Transportation
+    - direction: tomany
+      fks:
+      - preferred_destination_id
+      name: UserPreferenceList
+      resource: UserPreference
+    type: Destination
+  DestinationActivity:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: activity_id
+      template: integer
+      type: INTEGER
+    - name: destination_id
+      template: integer
+      type: INTEGER
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    label: DestinationActivity
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - activity_id
+      name: activity
+      resource: Activity
+    - direction: toone
+      fks:
+      - destination_id
+      name: destination
+      resource: Destination
+    type: DestinationActivity
+  Event:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: destination_id
+      template: integer
+      type: INTEGER
+    - name: date
+      type: DATETIME
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents special events occurring at a destination.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents special events occurring at a destination.
+    label: Event
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - destination_id
+      name: destination
+      resource: Destination
+    type: Event
+  Guide:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: activity_id
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents guides available for activities at destinations.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents guides available for activities at destinations.
+    label: Guide
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - activity_id
+      name: activity
+      resource: Activity
+    type: Guide
+  Package:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: description
+      template: text
+      type: VARCHAR
+    - name: price
+      template: real
+      type: FLOAT
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents holiday packages that include multiple destinations.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents holiday packages that include multiple destinations.
+    label: Package
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - package_id
+      name: PackageDestinationList
+      resource: PackageDestination
+    type: Package
+  PackageDestination:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: destination_id
+      template: integer
+      type: INTEGER
+    - name: package_id
+      template: integer
+      type: INTEGER
+    description: Represents destinations included in a holiday package.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents destinations included in a holiday package.
+    label: PackageDestination
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - destination_id
+      name: destination
+      resource: Destination
+    - direction: toone
+      fks:
+      - package_id
+      name: package
+      resource: Package
+    type: PackageDestination
+  Review:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: destination_id
+      template: integer
+      type: INTEGER
+    - name: user_id
+      template: integer
+      type: INTEGER
+    - name: rating
+      template: integer
+      type: INTEGER
+    - name: comments
+      template: text
+      type: VARCHAR
+    description: Represents reviews given by users for destinations.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents reviews given by users for destinations.
+    label: Review
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - destination_id
+      name: destination
+      resource: Destination
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Review
+  Transportation:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: destination_id
+      template: integer
+      type: INTEGER
+    - name: Type
+      template: text
+      type: VARCHAR
+    - name: cost
+      template: real
+      type: FLOAT
+    description: Represents transportation options available for a destination.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents transportation options available for a destination.
+    label: Transportation
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - destination_id
+      name: destination
+      resource: Destination
+    type: Transportation
+  User:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: email
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents a user in the Flintstones holiday planner.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents a user in the Flintstones holiday planner.
+    label: User
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - user_id
+      name: BookingList
+      resource: Booking
+    - direction: tomany
+      fks:
+      - user_id
+      name: ReviewList
+      resource: Review
+    - direction: tomany
+      fks:
+      - user_id
+      name: UserPreferenceList
+      resource: UserPreference
+    type: User
+  UserPreference:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: preferred_activity_id
+      template: integer
+      type: INTEGER
+    - name: preferred_destination_id
+      template: integer
+      type: INTEGER
+    - name: user_id
+      template: integer
+      type: INTEGER
+    description: Represents user preferences for activities and destinations.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents user preferences for activities and destinations.
+    label: UserPreference
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - preferred_activity_id
+      name: preferred_activity
+      resource: Activity
+    - direction: toone
+      fks:
+      - preferred_destination_id
+      name: preferred_destination
+      resource: Destination
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: UserPreference
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false

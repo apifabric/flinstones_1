@@ -1,0 +1,58 @@
+<o-form-layout-manager attr="UserPreference" mode="tab" title="USERPREFERENCE">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="UserPreferenceTable" 
+            service="UserPreference" 
+            entity="UserPreference" 
+            title="USERPREFERENCE"
+            keys="id"
+            columns="id;preferred_activity_id;preferred_destination_id;user_id" 
+            header-actions="R;D"
+            visible-columns="id;preferred_activity_id;preferred_destination_id;user_id"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="preferred_activity_id" title="preferred_activity_id">
+    <o-table-cell-renderer-service attr="preferred_activity_id" 
+        service="Activity" entity="ActivityType" columns="id;name"
+        parent-keys="id:preferred_activity_id"
+        value-column="name" keys="preferred_activity_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="preferred_destination_id" title="preferred_destination_id">
+    <o-table-cell-renderer-service attr="preferred_destination_id" 
+        service="Destination" entity="DestinationType" columns="id;name"
+        parent-keys="id:preferred_destination_id"
+        value-column="name" keys="preferred_destination_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="user_id" title="user_id">
+    <o-table-cell-renderer-service attr="user_id" 
+        service="User" entity="UserType" columns="id;name"
+        parent-keys="id:user_id"
+        value-column="name" keys="user_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

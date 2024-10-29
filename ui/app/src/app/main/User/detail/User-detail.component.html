@@ -1,0 +1,210 @@
+<div class="container">
+<o-form-container breadcrumb="yes" breadcrumb-label-columns="name" breadcrumb-separator=", " class="fill-form">
+      <o-form #form attr="User_form_edit" 
+        service="User" 
+        entity="User" 
+        fxLayout="column" 
+        show-header="yes" 
+        header-actions="R;I;U;D"
+        #oDetailForm keys="id" 
+        keys-sql-types="INTEGER" 
+        show-header-navigation="yes"
+        (onDataLoaded)="onDataLoaded($event)">
+
+  <o-row attr="row1" layout-align="start stretch">
+    <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
+      
+      <o-text-input #name attr="name" label=" name*" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-text-input #email attr="email" label="email" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-integer-input #id attr="id" label="id" type="integer" editable="no" required="no" ></o-integer-input>
+      
+    </div>
+  </o-row>
+      
+      <mat-tab-group fxFill>
+        
+        <mat-tab label="BOOKING-user_id">
+    <div layout-padding>
+      <o-table 
+        attr="BookingTable" 
+        service="Booking" 
+        entity="Booking" 
+        keys="id"
+        parent-keys="user_id:id"
+        columns="id;destination_id;user_id;start_date;end_date;total_cost"  
+        horizontal-scroll="yes"
+        detail-form-route="Booking" 
+        edit-form-route="Booking"
+        visible-columns="id;destination_id;user_id;start_date;end_date;total_cost"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="destination_id" title="destination_id">
+    <o-table-cell-renderer-service attr="destination_id" 
+        service="Destination" entity="DestinationType" columns="id;name"
+        parent-keys="id:destination_id"
+        value-column="name" keys="destination_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="user_id" title="user_id">
+    <o-table-cell-renderer-service attr="user_id" 
+        service="User" entity="UserType" columns="id;name"
+        parent-keys="id:user_id"
+        value-column="name" keys="user_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-date-input #start_date attr="start_date" type="timestamp" label="start_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+          <o-date-input #end_date attr="end_date" type="timestamp" label="end_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+          <o-table-column #total_cost attr="total_cost" title="total_cost" type="real" min-decimal-digits="2" max-decimal-digits="4" min="0" max="1000000.0000" content-align="center"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="REVIEW-user_id">
+    <div layout-padding>
+      <o-table 
+        attr="ReviewTable" 
+        service="Review" 
+        entity="Review" 
+        keys="id"
+        parent-keys="user_id:id"
+        columns="id;destination_id;user_id;rating;comments"  
+        horizontal-scroll="yes"
+        detail-form-route="Review" 
+        edit-form-route="Review"
+        visible-columns="id;destination_id;user_id;rating;comments"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="destination_id" title="destination_id">
+    <o-table-cell-renderer-service attr="destination_id" 
+        service="Destination" entity="DestinationType" columns="id;name"
+        parent-keys="id:destination_id"
+        value-column="name" keys="destination_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="user_id" title="user_id">
+    <o-table-cell-renderer-service attr="user_id" 
+        service="User" entity="UserType" columns="id;name"
+        parent-keys="id:user_id"
+        value-column="name" keys="user_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #rating attr="rating" title="rating" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column #comments attr="comments" title="comments" editable="no" required="no" content-align="left"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="USERPREFERENCE-user_id">
+    <div layout-padding>
+      <o-table 
+        attr="UserPreferenceTable" 
+        service="UserPreference" 
+        entity="UserPreference" 
+        keys="id"
+        parent-keys="user_id:id"
+        columns="id;preferred_activity_id;preferred_destination_id;user_id"  
+        horizontal-scroll="yes"
+        detail-form-route="UserPreference" 
+        edit-form-route="UserPreference"
+        visible-columns="id;preferred_activity_id;preferred_destination_id;user_id"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="preferred_activity_id" title="preferred_activity_id">
+    <o-table-cell-renderer-service attr="preferred_activity_id" 
+        service="Activity" entity="ActivityType" columns="id;name"
+        parent-keys="id:preferred_activity_id"
+        value-column="name" keys="preferred_activity_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="preferred_destination_id" title="preferred_destination_id">
+    <o-table-cell-renderer-service attr="preferred_destination_id" 
+        service="Destination" entity="DestinationType" columns="id;name"
+        parent-keys="id:preferred_destination_id"
+        value-column="name" keys="preferred_destination_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="user_id" title="user_id">
+    <o-table-cell-renderer-service attr="user_id" 
+        service="User" entity="UserType" columns="id;name"
+        parent-keys="id:user_id"
+        value-column="name" keys="user_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+      </mat-tab-group>
+      
+    </o-form>
+  </o-form-container>
+</div>
